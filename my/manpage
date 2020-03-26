@@ -1,0 +1,69 @@
+
+r20.0326T.klone.py
+
+NAME
+        klone - Clone a repository with git using a cache
+
+
+SYNOPSIS
+        klone [-hmlz] [-cCUT] <remote> [<local>]
+
+
+DESCRIPTION
+        A wrapper for [git clone] that caches remote klones. This wrapper does
+        not implement [git clone] options.
+        
+        A cache of remote repos is maintained. If <remote> is not in the
+        cache, clone it to the cache. Then, if <local> is given, clone the
+        cached copy to <local> 
+
+OPTIONS
+        -h
+            Invoke the argparse help.
+
+        -z
+            Remove any cached copy of <remote>. This will result in a fresh
+            copy being cloned from <remote>.
+
+        -m      
+            Show this pseudo-man page.
+
+        -l      
+            List all user defined shortcutsi (see -cCUT).
+
+        -cCUT
+            Prefix the string <remote> with a user defines shortcut,
+            alleviating the need to type out a full URL. (See ENVIRONMENT
+            VARIABLES)
+
+
+ENVIRONMENT VARIABLES
+
+        R20_0326T_CACHE
+
+            A required environment variable which names the directory to use
+            as the root directory of the cacned clones. Eg:
+
+                [$ export R20_0326T_CACHE=~/.cache/my/clone/cache].
+
+
+        R20_0326T_CUT_{key}
+
+            An optionial environment variable which defines a shortcut for use
+            with the '-c' option. Eg:
+
+                [$ export R20_0326T_CUT_g=https://github.com] and
+                [$ export R20_0326T_CUT_s=https://github.com/longtallsally],
+
+            in which case the following lines do the same thing:
+
+                [$ klone https://github.com/longtallsally/repo dst]
+                [$ klone -cg longtallsally/repo dst]
+                [$ klone -ct repo dst].
+
+            The value of {key} may be any continguous nonempty alphanumeric
+            string.
+
+BUGS
+        This program wraps [git clone] but it DOES NOT IMPLEMENT (or pass on)
+        any [git clone] options.
